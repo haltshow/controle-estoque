@@ -18,14 +18,14 @@ export default function Sidebar() {
             icon: '',
             link: '/vendas'
         }, {
-            label: 'Produtos',
+            label: 'Fornecedores',
             icon: '',
-            link: '/produtos'
+            link: '/fornecedores'
         },
     ]
 
     return (
-        <header className="min-h-screen w-64 bg-stone-900 p-8 flex flex-col items-center space-y-16">
+        <header className="min-h-screen w-64 bg-stone-900 p-8 flex flex-col items-center space-y-16 border-r-2 border-cyan-500">
             <Image src="/logo.png" width={100} height={100} alt="Logo" />
            <ul className="flex flex-col justify-center space-y-8">
                 {menu && menu.map((m, id) => {
