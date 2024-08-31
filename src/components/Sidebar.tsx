@@ -5,7 +5,7 @@ export default function Sidebar() {
     const menu = [{
             label: 'Dashboard',
             icon: '',
-            link: '/dashboard'
+            link: '/'
         }, {
             label: 'Estoque',
             icon: '',
