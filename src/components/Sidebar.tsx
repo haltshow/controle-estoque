@@ -1,26 +1,27 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import IconLucide from "@/components/Icon"
 
 export default function Sidebar() {
     const menu = [{
             label: 'Dashboard',
-            icon: '',
-            link: '/'
+            icon: "layout-dashboard",
+            link: '/',
         }, {
             label: 'Estoque',
-            icon: '',
+            icon: 'package-open',
             link: '/estoque'
         }, {
             label: 'Compras',
-            icon: '',
+            icon: 'shopping-basket',
             link: '/compras'
         }, {
             label: 'Vendas',
-            icon: '',
+            icon: 'badge-dollar-sign',
             link: '/vendas'
         }, {
             label: 'Fornecedores',
-            icon: '',
+            icon: 'container',
             link: '/fornecedores'
         },
     ]
@@ -32,16 +33,30 @@ export default function Sidebar() {
                 <ul className="flex flex-col justify-center space-y-8">
                         {menu && menu.map((m, id) => {
                             return (
-                                <li key={id}> 
-                                    <a href={m.link} className="cursor-pointer"> {m.label} </a>
-                                </li>
+                                <div className="flex justify-center items-center gap-2" key={id}>
+                                    {m.icon ? (
+                                        <IconLucide name={m.icon} size={20} />
+                                    ) : ''}
+                                
+                                    <li> 
+                                        <a href={m.link} className="cursor-pointer"> {m.label} </a>
+                                    </li>
+                                </div>
                             )
                         })}
                 </ul>
             </div>
             <div className="flex flex-col gap-8">
-                <p><a href="/settings">Configurações</a></p>
-                <Button className="text-base"> Sair </Button> 
+                <p>
+                    <a href="/settings" className="flex justify-center items-center gap-2">
+                        <IconLucide name="settings" size={20} />
+                        Configurações
+                    </a>
+                </p>
+                <Button className="text-base flex justify-center items-center gap-2">
+                    <IconLucide name="log-out" size={20} />
+                    Sair 
+                </Button> 
             </div>
         </header>
     )
