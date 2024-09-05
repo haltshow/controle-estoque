@@ -1,9 +1,8 @@
 import { create } from 'zustand'
 import { v4 as uuid } from 'uuid';
 
-export type Purchase = {
+export type Sale = {
     id: string;
-    supplier: string;
     product: string;
     unit_value: number;
     qtd: number;
@@ -12,25 +11,24 @@ export type Purchase = {
 }
 
 export type State = {
-    purchases: Purchase[]
+    sales: Sale[]
 }
 
 export type Actions = {
-    addPurchase: (supplier: string, product: string, unit_value: number, qtd: number, status: string) => void;
-    removePurchase: (id: string) => void;
-    updatePurchase: (id: string, newPurchase: Purchase) => void;
+    addSale: (product: string, unit_value: number, qtd: number, status: string) => void;
+    removeSale: (id: string) => void;
+    updateSale: (id: string, newSale: Sale) => void;
 }
 
-export const usePurchaseStore = create()(set => ({
-    purchases: [
+export const useSaleStore = create()(set => ({
+    sales: [
         {
             id: uuid(),
-            supplier: 'Fornecedor 1',
             product: 'Produto 1',
             unit_value: 100,
             qtd: 10,
             total: 100 * 10,
-            status: 'Aguardando entrega'
+            status: 'Aguardando confirmação'
         },
         {
             id: uuid(),
@@ -39,7 +37,7 @@ export const usePurchaseStore = create()(set => ({
             unit_value: 100,
             qtd: 10,
             total: 100 * 10,
-            status: 'Aguardando entrega'
+            status: 'Aguardando confirmação'
         },
         {
             id: uuid(),
@@ -48,7 +46,7 @@ export const usePurchaseStore = create()(set => ({
             unit_value: 100,
             qtd: 10,
             total: 100 * 10,
-            status: 'Aguardando entrega'
+            status: 'Aguardando confirmação'
         },
         {
             id: uuid(),
@@ -66,13 +64,12 @@ export const usePurchaseStore = create()(set => ({
             unit_value: 100,
             qtd: 10,
             total: 100 * 10,
-            status: 'Aguardando entrega'
+            status: 'Aguardando confirmação'
         }
     ],
-    addPurchase: (supplier: string, product: string, unit_value: number, qtd: number, status: string) => set((state: State) => ({ purchases: [...state.purchases, 
+    addSale: (product: string, unit_value: number, qtd: number, status: string) => set((state: State) => ({ sales: [...state.sales, 
         {
             id: uuid(), 
-            supplier,
             product,
             unit_value,
             qtd,
@@ -80,12 +77,12 @@ export const usePurchaseStore = create()(set => ({
             status
         }] 
     })),
-    removePurchase: (id: string) => set((state: State) => ({ purchases: state.purchases.filter(product => product.id !== id) })),
-    updatePurchase: (id: string, newPurchase: Purchase) => set((state: State) => ({ 
-        purchases: state.purchases.map(purchase => 
-            purchase.id === id ? 
-            { id: purchase.id, supplier: newPurchase.supplier, product: newPurchase.product, unit_value: newPurchase.unit_value, qtd: newPurchase.qtd, total: newPurchase.unit_value * newPurchase.qtd, status: newPurchase.status }
-            : purchase
+    removeSale: (id: string) => set((state: State) => ({ sales: state.sales.filter(product => product.id !== id) })),
+    updateSale: (id: string, newSale: Sale) => set((state: State) => ({ 
+        sales: state.sales.map(sale => 
+            sale.id === id ? 
+            { id: sale.id, product: newSale.product, unit_value: newSale.unit_value, qtd: newSale.qtd, total: newSale.unit_value * newSale.qtd, status: newSale.status }
+            : sale
         ) 
     })),
 }))

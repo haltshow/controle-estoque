@@ -1,20 +1,19 @@
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
   } from "@/components/ui/form"
 import { DialogClose } from "@radix-ui/react-dialog"
-import { object, z } from "zod"
+import { z } from "zod"
 import { Button } from "../ui/button"
 import { DialogFooter } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { usePurchaseStore } from "@/app/(app)/compras/store"
+import { useSaleStore } from "@/app/(app)/vendas/store"
 import {
     Select,
     SelectContent,
@@ -22,14 +21,9 @@ import {
     SelectTrigger,
     SelectValue,
   } from '@/components/ui/select'
-import { Label } from "@radix-ui/react-label"
 
 
 const FormSchema = z.object({
-    supplier: z.string({
-        required_error: "Fornecedor é obrigatório",
-        invalid_type_error: "Fornecedor precisa ser string",
-    }),
     product: z.string({
         required_error: "Produto é obrigatório",
         invalid_type_error: "Produto precisa ser string",
@@ -48,59 +42,35 @@ const FormSchema = z.object({
     }),
 })
 
-export default function PurchaseForm({ purchase, setIsOpen }: any) {    
-    console.log("purchase: ", purchase)
+export default function SaleForm({ sale, setIsOpen }: any) {    
+    console.log("sale: ", sale)
 
-    const addPurchase = usePurchaseStore((state: any) => state.addPurchase)
-    const editPurchase = usePurchaseStore((state: any) => state.updatePurchase)
+    const editSale= useSaleStore((state: any) => state.updateSale)
+    const addSale = useSaleStore((state: any) => state.addSale)
 
-    function sendAddPurchase(object: z.infer<typeof FormSchema>) {
-        addPurchase(object?.supplier, object?.product, object?.unit_value, object?.qtd, object?.status)
+    function sendAddSale(object: z.infer<typeof FormSchema>) {
+        addSale(object?.product, object?.unit_value, object?.qtd, object?.status)
         setIsOpen(false)
     }
 
-    function sendEditPurchase(object: z.infer<typeof FormSchema>) {
-        editPurchase(purchase.id, {supplier: object?.supplier, product: object?.product, unit_value: object?.unit_value, qtd: object?.qtd, status: object?.status})
+    function sendEditSale(object: z.infer<typeof FormSchema>) {
+        editSale(sale.id, {product: object?.product, unit_value: object?.unit_value, qtd: object?.qtd, status: object?.status})
         setIsOpen(false)
     }
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            supplier: purchase?.supplier ?? '',
-            product: purchase?.product ?? '',
-            unit_value: purchase?.unit_value ?? '',
-            qtd: purchase?.qtd ?? '',
-            status: purchase?.status ?? ''
+            product: sale?.product ?? '',
+            unit_value: sale?.unit_value ?? '',
+            qtd: sale?.qtd ?? '',
+            status: sale?.status ?? ''
         },
     })
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(purchase ? sendEditPurchase : sendAddPurchase)} className="space-y-4">
-                <FormField
-                    control={form.control}
-                    name="supplier"
-                    render={({ field }) => (
-                        <div>
-                            <FormItem>
-                                <FormLabel>Fornecedor</FormLabel>
-                                <FormControl>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <SelectTrigger className="">
-                                            <SelectValue placeholder="Selecione um fornecedor" />
-                                        </SelectTrigger>
-                                        <SelectContent className="bg-rose-50 text-black font-bold">
-                                            <SelectItem value="Fornecedor Teste">Fornecedor Teste</SelectItem>
-                                            <SelectItem value="Fornecedor Teste 2">Fornecedor Teste 2</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </FormControl>
-                                <FormMessage className="text-red-400" />
-                            </FormItem>
-                        </div>
-                    )}
-                />
+            <form onSubmit={form.handleSubmit(sale ? sendEditSale : sendAddSale)} className="space-y-4">
                 <FormField
                     control={form.control}
                     name="product"
@@ -167,7 +137,7 @@ export default function PurchaseForm({ purchase, setIsOpen }: any) {
                                             <SelectValue placeholder="Selecione um status" />
                                         </SelectTrigger>
                                         <SelectContent className="bg-rose-50 text-black font-bold">
-                                            <SelectItem value="Aguardando entrega">Aguardando Entrega</SelectItem>
+                                            <SelectItem value="Aguardando confirmação">Aguardando confirmação</SelectItem>
                                             <SelectItem value="Concluída">Concluída</SelectItem>
                                         </SelectContent>
                                     </Select>
@@ -184,7 +154,7 @@ export default function PurchaseForm({ purchase, setIsOpen }: any) {
                         </Button>
                     </DialogClose>
                     <Button type="submit" className="rounded-lg font-bold bg-green-500 text-black hover:bg-green-400">
-                        { purchase ? 'Editar' : 'Cadastrar' }
+                        { sale ? 'Editar' : 'Cadastrar' }
                     </Button>
                 </DialogFooter>
             </form>

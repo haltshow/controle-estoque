@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/dialog"
 import { Plus, Edit } from "lucide-react"
 import { useState } from "react";
-import PurchaseForm from "./Form";
+import SaleForm from "./Form";
 
-export default function PurchaseDialog({purchase}: any) {
+export default function SaleDialog({sale}: any) {
     const [open, setOpen] = useState(false);
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                {purchase ? (
+                {sale ? (
                     <Button className="bg-yellow-500 text-black flex justify-center items-center gap-2 hover:bg-yellow-400 rounded">
                         <Edit color="black" size={18} />
                     </Button>
@@ -28,10 +28,10 @@ export default function PurchaseDialog({purchase}: any) {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md bg-black text-white">
                 <DialogHeader className="pb-4 mb-2 border-b-2 border-rose-50">
-                    <DialogTitle className="text-2xl">Adicionar Compra</DialogTitle>
+                    <DialogTitle className="text-2xl">Adicionar Venda</DialogTitle>
                 </DialogHeader>
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <PurchaseForm purchase={purchase} setIsOpen={setOpen} />
+                    <SaleForm sale={sale} setIsOpen={setOpen} />
                 </div>
             </DialogContent>
         </Dialog>
