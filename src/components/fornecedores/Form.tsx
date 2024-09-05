@@ -9,9 +9,9 @@ import {
   } from "@/components/ui/form"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { z } from "zod"
-import { Button } from "../../ui/button"
-import { DialogFooter } from "../../ui/dialog"
-import { Input } from "../../ui/input"
+import { Button } from "../ui/button"
+import { DialogFooter } from "../ui/dialog"
+import { Input } from "../ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useSupplierStore } from '@/app/(app)/fornecedores/store'

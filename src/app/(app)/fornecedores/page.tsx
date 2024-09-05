@@ -12,7 +12,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { useSupplierStore } from './store'
-import SupplierDialog from "@/components/fornecedores/edit/Dialog";
+import SupplierDialog from "@/components/fornecedores/Dialog";
 
 export default function Home() {
     const suppliers = useSupplierStore((state: any) => state.suppliers)
